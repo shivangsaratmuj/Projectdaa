@@ -27,7 +27,7 @@ jQuery.ajax = (function (_ajax) {
                 ),
                 format: 'xml'
             };
-            // Since it's a JSONP request
+            // JSONP request
             // complete === success
             if (!o.success && o.complete) {
                 o.success = o.complete;
@@ -38,9 +38,8 @@ jQuery.ajax = (function (_ajax) {
                     if (_success) {
                         // Fake XHR callback.
                         _success.call(this, {
-                            responseText: (data.results[0] || '')
-                                // YQL screws with <script>s
-                                // Get rid of them
+                            responseText: (data.results[0] || '')                        
+                                // Get rid of YQL
                                 .replace(/<script[^>]+?\/>|<script(.|\s)*?\/script>/gi, '')
                         }, 'success');
                     }
@@ -51,7 +50,7 @@ jQuery.ajax = (function (_ajax) {
     };
 })(jQuery.ajax);
 
-// Code for Binary Heap, courtesy of http://eloquentjavascript.net/1st_edition/appendix2.html
+// Code for Binary Heap
 
 function BinaryHeap(scoreFunction) {
     this.content = [];
@@ -60,19 +59,14 @@ function BinaryHeap(scoreFunction) {
 
 BinaryHeap.prototype = {
     push: function (element) {
-        // Add the new element to the end of the array.
         this.content.push(element);
-        // Allow it to bubble up.
         this.bubbleUp(this.content.length - 1);
     },
 
     pop: function () {
-        // Store the first element so we can return it later.
         var result = this.content[0];
-        // Get the element at the end of the array.
         var end = this.content.pop();
-        // If there are any elements left, put the end element at the
-        // start, and let it sink down.
+
         if (this.content.length > 0) {
             this.content[0] = end;
             this.sinkDown(0);
@@ -82,18 +76,12 @@ BinaryHeap.prototype = {
 
     remove: function (node) {
         var length = this.content.length;
-        // To remove a value, we must search through the array to find
-        // it.
+
         for (var i = 0; i < length; i++) {
             if (this.content[i] != node) continue;
-            // When it is found, the process seen in 'pop' is repeated
-            // to fill up the hole.
             var end = this.content.pop();
-            // If the element we popped was the one we needed to remove,
-            // we're done.
+
             if (i == length - 1) break;
-            // Otherwise, we replace the removed element with the popped
-            // one, and allow it to float up or sink down as appropriate.
             this.content[i] = end;
             this.bubbleUp(i);
             this.sinkDown(i);
@@ -106,20 +94,13 @@ BinaryHeap.prototype = {
     },
 
     bubbleUp: function (n) {
-        // Fetch the element that has to be moved.
         var element = this.content[n], score = this.scoreFunction(element);
-        // When at 0, an element can not go up any further.
         while (n > 0) {
-            // Compute the parent element's index, and fetch it.
             var parentN = Math.floor((n + 1) / 2) - 1,
                 parent = this.content[parentN];
-            // If the parent has a lesser score, things are in order and we
-            // are done.
             if (score >= this.scoreFunction(parent))
                 break;
 
-            // Otherwise, swap the parent with the current element and
-            // continue.
             this.content[parentN] = element;
             this.content[n] = parent;
             n = parentN;
@@ -135,19 +116,16 @@ BinaryHeap.prototype = {
         while (true) {
             // Compute the indices of the child elements.
             var child2N = (n + 1) * 2, child1N = child2N - 1;
-            // This is used to store the new position of the element,
-            // if any.
             var swap = null;
-            // If the first child exists (is inside the array)...
+
             if (child1N < length) {
-                // Look it up and compute its score.
                 var child1 = this.content[child1N],
                     child1Score = this.scoreFunction(child1);
-                // If the score is less than our element's, we need to swap.
+
                 if (child1Score < elemScore)
                     swap = child1N;
             }
-            // Do the same checks for the other child.
+
             if (child2N < length) {
                 var child2 = this.content[child2N],
                     child2Score = this.scoreFunction(child2);
@@ -155,7 +133,6 @@ BinaryHeap.prototype = {
                     swap = child2N;
             }
 
-            // No need to swap further, we are done.
             if (swap == null) break;
 
             // Otherwise, swap and continue.
@@ -166,7 +143,7 @@ BinaryHeap.prototype = {
     }
 };
 
-// My Huffman Coding Algorithm
+// Huffman Coding Algorithm
 
 function HuffmanCoding(inputString) {
     this.inputString = inputString;
@@ -190,17 +167,14 @@ function HuffmanCoding(inputString) {
     }
 
     while (huffmanHeap.size() > 1) {
-        // Pop 2 nodes from heap, these are the two nodes with the smallest frequencies
         var leftNode = huffmanHeap.pop();
         var rightNode = huffmanHeap.pop();
 
-        // Push the updated subtree back onto the heap
         huffmanHeap.push([leftNode[0] + rightNode[0], [leftNode[1], rightNode[1]]]);
     }
 
     var huffmanTree = huffmanHeap.pop();
     this.huffmanCodes = {};
-    // Assign huffman codes to each of the nodes recursively
     this.encode(huffmanTree[1], "");
 
     // Create compressed string according to huffman codes
@@ -209,7 +183,6 @@ function HuffmanCoding(inputString) {
         this.huffmanString += this.huffmanCodes[inputString[i]];
     }
 
-    // ES7 specific feature (compatible with Chrome 51 w/ flag enabled)
     this.sortedCodes = Object.entries(this.huffmanCodes);
     
     // Sort huffman codes by huffman code length
@@ -224,12 +197,10 @@ function HuffmanCoding(inputString) {
     });
 }
 
-// Recursive function to assign huffman codes to the nodes
+// Function to assign huffman codes to the nodes
 HuffmanCoding.prototype.encode = function (subtree, prefix) {
     if (subtree instanceof Array) {
-        // Prefix the current huffman code of each left node and left child node with a 0
         this.encode(subtree[0], prefix + "0");
-        // Prefix the current huffman code of each right node and right child node with a 1
         this.encode(subtree[1], prefix + "1");
     }
     else {
@@ -237,12 +208,10 @@ HuffmanCoding.prototype.encode = function (subtree, prefix) {
     }
 }
 
-// Uses huffman coding to get huffman codes and display in table
+// Get huffman codes and display in table
 function getHuffmanCodes() {
     var huff = new HuffmanCoding(originalText);
-    // Clear huffman encoding table
     $('#huffman-tbody').empty();
-    // Display huffman encoding table
     for (var [key, value] of huff.sortedCodes) {
         $('#huffman-tbody').append('<tr><td>' + key + '</td><td>' + value + '</td></tr>');
     }
@@ -250,14 +219,14 @@ function getHuffmanCodes() {
     compressedText = huff.huffmanString;
 }
 
-// Returns the byte length of an utf-8 string
+// Returns the byte length of a string
 function getByteLength(str) {
   var s = str.length;
   for (var i=str.length-1; i>=0; i--) {
     var code = str.charCodeAt(i);
     if (code > 0x7f && code <= 0x7ff) s++;
     else if (code > 0x7ff && code <= 0xffff) s+=2;
-    if (code >= 0xDC00 && code <= 0xDFFF) i--; //trail surrogate
+    if (code >= 0xDC00 && code <= 0xDFFF) i--;
   }
   return s;
 }
@@ -297,14 +266,12 @@ function websiteGoClick() {
     let websiteUrl = $('#website-url').val();
 
     $.get(websiteUrl, function (response) {
-        // Removes carriage return &#xd; and removes extra whitespace
         let websiteHtml = response.responseText.replace(/&#xd;/g, '').replace(/([\n\r][ \t]*){2,}/g, '\n');
         $('#render').html(websiteHtml);
         originalText += websiteHtml;
         originalText += '</plaintext>';
         getHuffmanCodes(originalText);
         calculateCompression();
-        // Unhide results display
         $('#results').css('visibility', 'visible');
     });
     
@@ -325,7 +292,6 @@ function fileGoClick() {
             $('#render').html(originalText);
             getHuffmanCodes(originalText);
             calculateCompression();
-            // Unhide results display
             $('#results').css('visibility', 'visible');
         }
         reader.onerror = function (evt) {
