@@ -4,6 +4,13 @@
 <head>
     <title>Huffman Coding Compressor</title>
 
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="author" content="Shivang Sarat">
+    <meta name="description" content="DAA Project">
+    <meta name="keywords" content="Project, HTML, CSS, Design, Analysis, Algrithms">
+
     <link href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -19,12 +26,14 @@
 
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" id="website-tab" class="active"><a href="#website" aria-controls="website" role="tab" data-toggle="tab" onclick="resetResults()">Website</a></li>
-            <li role="presentation" id="file-tab"><a href="#file" aria-controls="file" role="tab" data-toggle="tab" onclick="resetResults()">Text File</a></li>
+            <li role="presentation" id="website-tab" class="active"><a href="#website" aria-controls="website"
+                    role="tab" data-toggle="tab" onclick="resetResults()">Website</a></li>
+            <li role="presentation" id="file-tab"><a href="#file" aria-controls="file" role="tab" data-toggle="tab"
+                    onclick="resetResults()">Text File</a></li>
         </ul>
 
         <!-- Tab panes -->
-        <div class="tab-content">            
+        <div class="tab-content">
             <!-- Website tab -->
             <div role="tabpanel" class="tab-pane active" id="website">
                 <form>
@@ -32,8 +41,8 @@
                     <div class="input-group input-group-lg">
                         <input type="text" class="form-control" id="website-url" placeholder="Compress...">
                         <span class="input-group-btn">
-                        <button class="btn btn-info" type="button" onclick="websiteGoClick()">Go!</button>
-                    </span>
+                            <button class="btn btn-info" type="button" onclick="websiteGoClick()">Go!</button>
+                        </span>
                     </div>
                 </form>
             </div>
@@ -49,7 +58,7 @@
                 </form>
             </div>
         </div>
-        
+
         <!-- Results -->
         <div id="results">
             <div class="col-md-3" id="render"></div>
@@ -66,9 +75,11 @@
             <div class="col-md-5">
                 <h2 class="inline-display compRatio">Compression: </h2>
                 <h2 class="inline-display compRatio"><b id="compressRatio"></b></h2>
-                <h3 class="inline-display"><a data-toggle="modal" data-target="#myModal" onclick="setModalBody(0)">Original file</a> size (in bits): </h3>
+                <h3 class="inline-display"><a data-toggle="modal" data-target="#myModal"
+                        onclick="setModalBody(0)">Original file</a> size (in bits): </h3>
                 <h3 class="inline-display"><b id="ogFileSize"></b></h3>
-                <h3 class="inline-display"><a data-toggle="modal" data-target="#myModal" onclick="setModalBody(1)">Compressed</a> size (in bits): </h3>
+                <h3 class="inline-display"><a data-toggle="modal" data-target="#myModal"
+                        onclick="setModalBody(1)">Compressed</a> size (in bits): </h3>
                 <h3 class="inline-display"><b id="comFileSize"></b></h3>
             </div>
         </div>
@@ -79,7 +90,8 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                 </div>
                 <div class="modal-body">
